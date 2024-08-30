@@ -1,66 +1,79 @@
-body{
-    font-family: 'Times New Roman', Times, serif;
-    text-align: center;
+body {
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  background-image: url("bg1.jpg");
+  /* background-position: center;  */
+  background-repeat: no-repeat;
+  background-size: cover; 
 }
-.align{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+h1 {
+    color: #fff;
+    margin-top: 10%;
 }
-
-.turn-container{
-    width: 170px;
-    height: 80px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    position: relative;
-}
-
-.turn-container h3{
-    margin: 0;
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.turn-container .turn-box{
-    border: 3px solid #000;
-    font-size: 1.6rem;
-    font-weight: 700;
+h3 {
+    color: #fff;
+  }
+/* From Uiverse.io by Custyyyy */
+#start-game {
+  padding-left: 33px;
+  padding-right: 33px;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  border-radius: 30px;
+  background: #d5f365;
+  border: none;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.4s;
 }
 
-.turn-container .turn-box:nth-child(even){
-    border-right: none;
-}
-.bg{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 85px;
-    height: 40px;
-    background-color: #FF2E63;
-    z-index: -1;
-
-}
-hr{
-    width: 500px;
-    height: 3px;
-    background-color: black;
+#start-game:hover {
+  box-shadow: 7px 5px 56px -14px #c3d900;
 }
 
-#board {
-    width: 450px;
-    height: 450px;
+#start-game:active {
+  transform: scale(0.97);
+  box-shadow: 7px 5px 56px -10px #c3d900;
+}
+.inputs{
+    gap: 10px;
 
-    background-color: yellow;
-
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
+}
+input {
+  border-radius: 10px;
+  outline: 2px solid #febf00;
+  border: 0;
+  font-family: inherit;
+  background-color: #e2e2e2;
+  outline-offset: 3px;
+  padding: 10px 1rem;
+  transition: 0.25s;
 }
 
+input:focus {
+  outline-offset: 5px;
+  background-color: #fff;
+}
+
+hr {
+  width: 500px;
+  height: 3px;
+  background-color: black;
+}
+
+table {
+  /* display: flex; */
+  background-color: rgb(196, 230, 242);
+  border-collapse: collapse;
+  margin: auto;
+}
+td {
+  border: 1px solid #000;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
 .tile {
-    width: 147px;
-
+  width: 147px;
 }
