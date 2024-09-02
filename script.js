@@ -15,10 +15,14 @@ document.querySelector("#start-game").addEventListener("click", () => {
 
   document.querySelector("#player-form").style.display = "none";
   document.querySelector("#game-container").style.display = "block";
-
+  
   createGrid();
   loadScores();
   loadGameState();
+
+  const turnIndicator = document.getElementById("playersturn");
+  turnIndicator.style.display = "block";
+  turnIndicator.innerText = `Current Turn: Player ${turn}`;
 });
 
 window.onload = function () {
@@ -55,6 +59,7 @@ function createGrid() {
 
 function changeTurn() {
   turn = turn === "X" ? "O" : "X";
+  document.getElementById("playersturn").innerText = `Current Turn: Player ${turn}`;
   saveGameState();
 }
 
@@ -167,3 +172,21 @@ function markWin(indices) {
   document.querySelector("#replay").style.display = "block";
 }
 
+
+document.querySelector("#replay").addEventListener("click", () => {
+
+    GameOver = false;
+    turn = "X";
+    document.querySelector("#results").innerHTML = "";
+
+    boxes.forEach(cell => {
+        cell.innerHTML = "";
+        cell.style.backgroundColor = "";
+    });
+
+    document.querySelector("#player-form").style.display = "block";
+    document.querySelector("#game-container").style.display = "none";
+    document.querySelector("#replay").style.display = "none";
+
+    saveGameState();
+})

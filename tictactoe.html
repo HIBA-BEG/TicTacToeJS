@@ -12,15 +12,18 @@
     <hr />
     <br />
     <div id="player-form">
-      <h3>Enter Player Names</h3>
-      <div class="inputss">
-        <input type="text" id="playerXName" placeholder="Player X Name" />
-        <input type="text" id="playerOName" placeholder="Player O Name" />
-        <button id="start-game">Start Game</button>
-      </div>
+        <h3>Enter Player Names</h3>
+        <div class="inputss">
+            <input type="text" id="playerXName" placeholder="Player X Name" />
+            <input type="text" id="playerOName" placeholder="Player O Name" />
+            <button id="start-game">Start Game</button>
+        </div>
     </div>
+    <h2 id="results"></h2>
+    <div id="playersturn" style="display: none"></div>
+    <h2 id="final-result" style="display: none"></h2>
     <div id="game-container">
-      <div class="score-container" style="display: none;">
+      <div class="score-container" style="display: none">
         <h3>
           <span id="playerXDisplayName">Player X</span>:
           <span id="scoreX">0</span>
@@ -31,9 +34,7 @@
         </h3>
       </div>
       <table id="board"></table>
-      <h2 id="results"></h2>
       <button id="replay">Play Again</button>
     </div>
-    <h2 id="final-result" style="display:none;"></h2>
   </body>
 </html>
