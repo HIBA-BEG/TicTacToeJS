@@ -1,5 +1,5 @@
 let turn = "X";
-let isGameOver = false;
+let GameOver = false;
 const size = 20;
 let boxes = [];
 
@@ -30,7 +30,7 @@ window.onload = function () {
 function createGrid() {
   const table = document.getElementById("board");
   table.innerHTML = "";
-  boxes = []; 
+  boxes = [];
 
   for (let i = 0; i < size; i++) {
     const row = table.insertRow();
@@ -41,9 +41,11 @@ function createGrid() {
       boxes.push(cell);
 
       cell.addEventListener("click", () => {
-        if (!isGameOver && cell.innerHTML === "") {
+        if (!GameOver && cell.innerHTML === "") {
           cell.innerHTML = turn;
           saveGameState();
+          checkWin();
+          checkDraw();
           changeTurn();
         }
       });
@@ -57,20 +59,111 @@ function changeTurn() {
 }
 
 function loadScores() {
-  
+  let scoreX = parseInt(localStorage.getItem('scoreX') || "0");
+  let scoreO = parseInt(localStorage.getItem('scoreO') || "0");
+  document.querySelector("#scoreX").innerText = scoreX;
+  document.querySelector("#scoreO").innerText = scoreO;
 }
 
 function saveGameState() {
- 
+  const gameState = {
+    turn: turn,
+    boxes: boxes.map(cell => cell.innerHTML),
+    GameOver: GameOver
+  };
+  localStorage.setItem('ticTacToeState', JSON.stringify(gameState));
 }
 
 function loadGameState() {
-  
+  const gameState = JSON.parse(localStorage.getItem('ticTacToeState'));
+  if (gameState) {
+    turn = gameState.turn;
+    GameOver = gameState.GameOver;
+    boxes.forEach((cell, index) => cell.innerHTML = gameState.boxes[index]);
+    if (GameOver) {
+      document.querySelector("#replay").style.display = "block";
+    }
+  }
 }
 
+function checkWin() {
+  const winLength = 5;
 
-function checkWin() {}
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col <= size - winLength; col++) {
+      let winIndices = [];
+      for (let i = 0; i < winLength; i++) {
+        winIndices.push(row * size + col + i);
+      }
+      if (winIndices.every(index => boxes[index].innerHTML === turn)) {
+        markWin(winIndices);
+        GameOver = true;
+        saveGameState();
+        return;
+      }
+    }
+  }
 
-function checkDraw() {}
+  for (let col = 0; col < size; col++) {
+    for (let row = 0; row <= size - winLength; row++) {
+      let winIndices = [];
+      for (let i = 0; i < winLength; i++) {
+        winIndices.push(col + (row + i) * size);
+      }
+      if (winIndices.every(index => boxes[index].innerHTML === turn)) {
+        markWin(winIndices);
+        GameOver = true;
+        saveGameState();
+        return;
+      }
+    }
+  }
 
-function saveGameState() {}
+  for (let row = 0; row <= size - winLength; row++) {
+    for (let col = 0; col <= size - winLength; col++) {
+      let winIndices = [];
+      for (let i = 0; i < winLength; i++) {
+        winIndices.push((row + i) * size + col + i);
+      }
+      if (winIndices.every(index => boxes[index].innerHTML === turn)) {
+        markWin(winIndices);
+        GameOver = true;
+        saveGameState();
+        return;
+      }
+    }
+  }
+
+  for (let row = winLength - 1; row < size; row++) {
+    for (let col = 0; col <= size - winLength; col++) {
+      let winIndices = [];
+      for (let i = 0; i < winLength; i++) {
+        winIndices.push((row - i) * size + col + i);
+      }
+      if (winIndices.every(index => boxes[index].innerHTML === turn)) {
+        markWin(winIndices);
+        GameOver = true;
+        saveGameState();
+        return;
+      }
+    }
+  }
+}
+
+function checkDraw() {
+  if (boxes.every(cell => cell.innerHTML !== "") && !GameOver) {
+    document.querySelector("#results").innerText = "It's a draw!";
+    document.querySelector("#replay").style.display = "block";
+    GameOver = true;
+    saveGameState();
+  }
+}
+
+function markWin(indices) {
+  indices.forEach(index => {
+    boxes[index].style.backgroundColor = "#d5f365";
+  });
+  document.querySelector("#results").innerText = `Player ${turn} wins!`;
+  document.querySelector("#replay").style.display = "block";
+}
+
